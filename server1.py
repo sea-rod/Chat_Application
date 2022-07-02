@@ -2,6 +2,9 @@ import socket
 import threading
 
 class Server:
+    '''
+    This is the server side code
+    '''
 
     __client_soc = {}
 
@@ -12,12 +15,18 @@ class Server:
         self.__head = head
     
     def listen(self):
+        '''
+        It starts listening for clients
+        '''
         self.__server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         self.__server.bind((self.__host,self.__port))
         print("sever listening...")
         self.__server.listen(5)
     
     def accept(self):
+        '''
+        It accepts connection from the clients
+        '''
         while True:
             conn ,addr = self.__server.accept()
             print(f"{addr} connected....")
@@ -28,7 +37,13 @@ class Server:
             t1=threading.Thread(target = self.receive,args=(conn,))
             t1.start()
 
+
     def receive(self, conn:socket):
+        '''
+        This function receives messaages from the clients
+        Parameters:
+            conn (socket): It holds the clients socket
+        '''
         while True:
             mess = ''
             raw_mess = conn.recv(self.__mess_size).decode()
@@ -50,6 +65,9 @@ class Server:
     
 
     def __send(self,mess:str):
+        '''
+        It send the message to all the clients connected
+        '''
         for soc in self.__client_soc.keys():
             soc.send(mess.encode())
         print(mess)
