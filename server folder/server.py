@@ -20,7 +20,8 @@ class Server:
         '''
         self.__server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         self.__server.bind((self.__host,self.__port))
-        print("sever listening...")
+        print(f"sever listening on {self.__host}:{self.__port}")
+        print("press Clrl+c to exit..")
         self.__server.listen(5)
     
     def accept(self):

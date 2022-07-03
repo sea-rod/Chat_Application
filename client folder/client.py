@@ -1,6 +1,8 @@
 import socket
 import threading
 
+from matplotlib.ft2font import BOLD
+
 
 class Client:
 
@@ -13,7 +15,7 @@ class Client:
         self.head = head
     
 
-    def connect(self)->None:
+    def connect(self)->bool:
         self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         code = self.__client.connect_ex((self.host,self.port))
         if code == 0:
@@ -21,6 +23,8 @@ class Client:
             self.t1 = threading.Thread(target = self.receive)
             self.t1.daemon = True
             self.t1.start()
+            return True
+        return False
 
 
     def receive(self)->None:
@@ -47,10 +51,9 @@ class Client:
 
 
 if __name__ == "__main__":
-    flag = True
 
     con = Client()
-    con.connect()
+    flag = con.connect()
 
     while flag:
         a = input()
