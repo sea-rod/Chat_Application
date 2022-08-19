@@ -1,9 +1,6 @@
 import socket
 import threading
 
-from matplotlib.ft2font import BOLD
-
-
 class Client:
 
     __flag = True
