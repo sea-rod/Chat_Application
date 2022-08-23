@@ -6,17 +6,17 @@ class Client:
     __flag = True
 
     def __init__(self, host = "127.0.0.1", port = 8080, mess_size = 1024*128, head = 20) -> None:
-        self.host = host
-        self.port = port 
+        self.__host = host
+        self.__port = port 
         self.mess_size = mess_size
         self.head = head
     
 
     def connect(self)->bool:
         self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        code = self.__client.connect_ex((self.host,self.port))
+        code = self.__client.connect_ex((self.__host,self.__port))
         if code == 0:
-            print(f"connected to {self.host}:{self.port}")
+            print(f"connected to {self.__host}:{self.__port}")
             self.t1 = threading.Thread(target = self.receive)
             self.t1.daemon = True
             self.t1.start()
@@ -46,12 +46,5 @@ class Client:
 
         return True
 
-
-if __name__ == "__main__":
-
-    con = Client()
-    flag = con.connect()
-
-    while flag:
-        a = input()
-        flag = con.send(a)
+    def __del__(self):
+        self.__client.close()
