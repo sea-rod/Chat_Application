@@ -73,8 +73,3 @@ class Server:
             soc.send(mess.encode())
         print(mess)
 
-
-if __name__ == "__main__":
-    a = Server()
-    a.listen()
-    a.accept()
