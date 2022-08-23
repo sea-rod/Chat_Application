@@ -13,6 +13,9 @@ class Client:
     
 
     def connect(self)->bool:
+        '''
+        connects to the server
+        '''
         self.__client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         code = self.__client.connect_ex((self.__host,self.__port))
         if code == 0:
@@ -25,6 +28,9 @@ class Client:
 
 
     def receive(self)->None:
+        '''
+        Recevies from the server
+        '''
         while self.__flag:
             mess = ''
             raw_mess = self.__client.recv(self.mess_size).decode()
@@ -36,6 +42,9 @@ class Client:
 
 
     def send(self,mess:str)->bool:
+        '''
+        Sends to the server and the server sends to the user
+        '''
         mess_head = f"{len(mess):{self.head}}"
         mess_head += mess
         self.__client.send(mess_head.encode())
